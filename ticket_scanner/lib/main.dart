@@ -47,11 +47,12 @@ class ModeSelectionScreen extends StatelessWidget {
             ],
           ),
         ),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+        child: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Logo o icono principal
                 const Icon(
@@ -165,6 +166,7 @@ class ModeSelectionScreen extends StatelessWidget {
                   ),
                 ),
               ],
+              ),
             ),
           ),
         ),
@@ -263,6 +265,7 @@ class _NormalModeScreenState extends State<NormalModeScreen>
   }
 
   void _onConnectivityChanged(ConnectivityResult result) {
+    if (!mounted) return;
     setState(() {
       _isConnected = result != ConnectivityResult.none;
     });
@@ -374,19 +377,13 @@ class _NormalModeScreenState extends State<NormalModeScreen>
   }
 
   Future<void> _playSuccessSound() async {
-    try {
-      await audioPlayer.play(AssetSource('sounds/success.mp3'));
-    } catch (e) {
-      SystemSound.play(SystemSoundType.click);
-    }
+    // Audio desactivado temporalmente - archivos vacíos
+    SystemSound.play(SystemSoundType.click);
   }
 
   Future<void> _playErrorSound() async {
-    try {
-      await audioPlayer.play(AssetSource('sounds/error.mp3'));
-    } catch (e) {
-      SystemSound.play(SystemSoundType.alert);
-    }
+    // Audio desactivado temporalmente - archivos vacíos
+    SystemSound.play(SystemSoundType.alert);
   }
 
   void _vibrate() {
@@ -485,15 +482,16 @@ class _NormalModeScreenState extends State<NormalModeScreen>
                   // Área central de escaneo
                   Expanded(
                     child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // Marco de escaneo visual
-                          ScaleTransition(
-                            scale: _scaleAnimation,
-                            child: Container(
-                              width: 200,
-                              height: 200,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // Marco de escaneo visual
+                            ScaleTransition(
+                              scale: _scaleAnimation,
+                              child: Container(
+                                width: 160,
+                                height: 160,
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: Colors.white.withOpacity(0.8),
@@ -525,14 +523,15 @@ class _NormalModeScreenState extends State<NormalModeScreen>
                             ),
                           ),
                           
-                          if (_currentState == ValidationState.validating)
-                            const Padding(
-                              padding: EdgeInsets.only(top: 20),
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
+                            if (_currentState == ValidationState.validating)
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -731,6 +730,7 @@ class _DebugModeScreenState extends State<DebugModeScreen>
   }
 
   void _onConnectivityChanged(ConnectivityResult result) {
+    if (!mounted) return;
     setState(() {
       _isConnected = result != ConnectivityResult.none;
     });
@@ -871,19 +871,13 @@ class _DebugModeScreenState extends State<DebugModeScreen>
   }
 
   Future<void> _playSuccessSound() async {
-    try {
-      await audioPlayer.play(AssetSource('sounds/success.mp3'));
-    } catch (e) {
-      SystemSound.play(SystemSoundType.click);
-    }
+    // Audio desactivado temporalmente - archivos vacíos
+    SystemSound.play(SystemSoundType.click);
   }
 
   Future<void> _playErrorSound() async {
-    try {
-      await audioPlayer.play(AssetSource('sounds/error.mp3'));
-    } catch (e) {
-      SystemSound.play(SystemSoundType.alert);
-    }
+    // Audio desactivado temporalmente - archivos vacíos
+    SystemSound.play(SystemSoundType.alert);
   }
 
   void _vibrate() {

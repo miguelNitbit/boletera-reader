@@ -7,7 +7,7 @@ import '../utils/constants.dart';
 class AudioService {
   late AudioPlayer _audioPlayer;
   double _volume = 1.0;
-  bool _soundEnabled = true;
+  bool _soundEnabled = false; // Desactivado temporalmente - archivos de audio vacíos
 
   // Singleton pattern
   static final AudioService _instance = AudioService._internal();
